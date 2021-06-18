@@ -6,7 +6,7 @@ use clap::{App};
 fn main() {
     let matches = App::new("Decorator")
                             .version("1.0")
-                            .author("Okko Oikkonen <okko.oikkonen@gmail.com")
+                            .author("Okko Oikkonen <okko.oikkonen@gmail.com>")
                             .about("Decorates a message and copies it to the clipboard")
                             .args_from_usage("
                             -m --mode=[1-2] 'decoration style modifier'
