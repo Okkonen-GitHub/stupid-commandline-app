@@ -2,8 +2,9 @@ extern crate clap;
 extern crate clipboard;
 use clipboard::{ClipboardContext, ClipboardProvider};
 use clap::{App};
-
+use std::time::Instant;
 fn main() {
+    let begin = Instant::now();
     let matches = App::new("Decorator")
                             .version("1.0")
                             .author("Okko Oikkonen <okko.oikkonen@gmail.com>")
@@ -22,8 +23,8 @@ fn main() {
     }
     let input = matches.values_of("INPUT").unwrap().nth(0).unwrap();
     println!("Preview:\n{}", decorate(input, mode.parse::<i32>().unwrap()));
-    let succces = copy_to_cb(decorate(input, mode.parse::<i32>().unwrap()));
-    println!("\nCopied to clipboard: {}", succces);
+    copy_to_cb(decorate(input, mode.parse::<i32>().unwrap()));
+    println!("\nFinished in: {:?}", begin.elapsed());
 }
 
 fn decorate(text: &str, mode: i32) -> String {
@@ -61,8 +62,7 @@ fn decorate(text: &str, mode: i32) -> String {
     
 }
 
-fn copy_to_cb(copy_text: String) -> &'static str {
+fn copy_to_cb(copy_text: String) -> () {
     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
     ctx.set_contents(copy_text.to_owned()).unwrap();
-    return "Success"
 }
