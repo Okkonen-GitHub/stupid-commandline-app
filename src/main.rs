@@ -1,7 +1,7 @@
 extern crate clap;
 extern crate clipboard;
 use clipboard::{ClipboardContext, ClipboardProvider};
-use clap::{App};
+use clap::App;
 use std::time::Instant;
 fn main() {
     let begin = Instant::now();
@@ -22,15 +22,16 @@ fn main() {
         mode = "2";
     }
     let input = matches.values_of("INPUT").unwrap().nth(0).unwrap();
-    println!("Preview:\n{}", decorate(input, mode.parse::<i32>().unwrap()));
-    copy_to_cb(decorate(input, mode.parse::<i32>().unwrap()));
+    let result = decorate(input, mode.parse::<i32>().unwrap());
+    println!("Preview:\n{}", result);
+    copy_to_cb(result);
     println!("\nFinished in: {:?}", begin.elapsed());
 }
 
 fn decorate(text: &str, mode: i32) -> String {
     let mut result: String = String::new();
     if mode == 1 {
-        result += "𝗜𝗺𝗽𝗼𝗿𝘁𝗮𝗻𝘁​​​​​\n";
+        result += "Important\n";
         for _thing in 0..text.chars().count()+4 {
             result += "■";
         }
@@ -45,7 +46,7 @@ fn decorate(text: &str, mode: i32) -> String {
         }
     }
     else if mode == 2 {
-        result += "𝖫𝗈𝗈𝗄 𝖺𝗍 𝗍𝗁𝗂𝗌\n";
+        result += "Look at this\n";
         for _thing in 0..text.chars().count()+4 {
             result += "▢";
         }
@@ -66,3 +67,4 @@ fn copy_to_cb(copy_text: String) -> () {
     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
     ctx.set_contents(copy_text.to_owned()).unwrap();
 }
+//* This is all so shit */
